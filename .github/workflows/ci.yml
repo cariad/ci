@@ -6,13 +6,19 @@ on:  # yamllint disable-line rule:truthy
 jobs:
 
   build:
+    container:
+      image: cariad/ci:latest
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: pipenv sync --dev
+
       - name: Validate
-        run: ./validate.sh
+        run: pipenv run ./validate.sh
 
       - name: Set up Docker Buildx
         id: buildx
