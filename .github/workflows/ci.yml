@@ -4,18 +4,23 @@ on:  # yamllint disable-line rule:truthy
   - push
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    container: cariad/ci:latest
+    steps:
+      - name: Install dependencies
+        run: pipenv sync --dev
+
+      - name: Validate
+        run: pipenv run ./validate.sh
 
   build:
+    needs:
+      - validate
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Validate
-        container: cariad/ci:latest
-        run: |
-          pipenv sync --dev
-          pipenv run ./validate.sh
 
       - name: Set up Docker Buildx
         id: buildx
