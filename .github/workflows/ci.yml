@@ -6,9 +6,7 @@ on:  # yamllint disable-line rule:truthy
 jobs:
 
   build:
-    container:
-      image: cariad/ci:latest
-
+    container: cariad/ci:latest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
