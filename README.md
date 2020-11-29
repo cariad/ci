@@ -1,4 +1,4 @@
-# ci
+# cariad/ci
 
 A Docker image for all my CI/CD needs, and maybe yours too.
 
