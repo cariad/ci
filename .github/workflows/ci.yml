@@ -11,11 +11,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: pipenv sync --dev
+      - name: Lint YAML
+        run: |
+          pipenv sync --dev
+          pipenv run yamllint .
 
-      - name: Validate
-        run: pipenv run ./validate.sh
+      - name: Lint Dockerfile
+        run: hadolint Dockerfile
+
+      - name: Lint scripts
+        run: shellcheck validate.sh
+
+      # - name: Install dependencies
+      #   run: pipenv sync --dev
+
+      # - name: Validate
+      #   run: pipenv run ./validate.sh
 
   build:
     needs:
