@@ -51,3 +51,27 @@ jobs:
 docker build --tag cariad/ci .
 docker run -it --rm cariad/ci
 ```
+
+## FAQs
+
+### How do I fix "<botocore.awsrequest.AWSRequest object at 0x7fbfdd919f60>" when I run "aws"?
+
+It looks like `aws` gets upset when a default region isn't set and it can't hit the EC2 metadata service to figure out where it is.
+
+Set these two environment variables in your CI pipeline:
+
+1. `AWS_DEFAULT_REGION=<your region>`
+1. `AWS_EC2_METADATA_DISABLED=true`
+
+### How do I set AWS credentials for the container to use?
+
+In GitHub Actions:
+
+1. Create secrets named `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in your GitHub repository, and set their values to your credentials.
+1. Add these environment variables to your workflow:
+
+```yaml
+env:
+  AWS_ACCESS_KEY_ID:     ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+```
