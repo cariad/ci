@@ -48,7 +48,7 @@ RUN pyenv install "${PYENV_VERSION}" && \
 # Python packages:
 ENV PIPENV_YES 1
 RUN pip install --no-cache-dir --upgrade pip==20.2.4        && \
-    pip install --no-cache-dir           pipenv==2020.11.15 && \
+    pip install --no-cache-dir           pipenv==2020.11.15    \
                                          yamllint~=1.25
 
 # hadolint:
