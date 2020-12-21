@@ -45,10 +45,11 @@ RUN pyenv install "${PYENV_VERSION}" && \
     rm -rf /tmp/*                    && \
     python --version
 
-# pipenv:
+# Python packages:
 ENV PIPENV_YES 1
 RUN pip install --no-cache-dir --upgrade pip==20.2.4        && \
-    pip install --no-cache-dir           pipenv==2020.11.15
+    pip install --no-cache-dir           pipenv==2020.11.15 && \
+                                         yamllint~=1.25
 
 # hadolint:
 ADD https://github.com/hadolint/hadolint/releases/download/v1.19.0/hadolint-Linux-x86_64 /usr/local/bin/hadolint
@@ -68,10 +69,13 @@ RUN gpg --import /tmp/aws-cli.pub && \
     rm -rf /tmp/*
 
 # Install AWS CLI:
-ADD https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.1.4.zip     /tmp/aws.zip
-ADD https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.1.4.zip.sig /tmp/aws.zip.sig
+ADD https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.1.13.zip     /tmp/aws.zip
+ADD https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.1.13.zip.sig /tmp/aws.zip.sig
 RUN gpg --verify /tmp/aws.zip.sig /tmp/aws.zip && \
     unzip /tmp/aws.zip -d /tmp                 && \
     /tmp/aws/install                           && \
     rm -rf /tmp/*                              && \
     aws --version
+
+# bin directory:
+COPY bin/ /usr/local/bin

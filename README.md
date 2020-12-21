@@ -13,21 +13,39 @@ A Docker image for all my CI/CD needs, and maybe yours too.
 - `python` (3.9.0)
 - `shellcheck`
 
-## Example usage
+## Scripts
 
-### GitHub Actions
+### validate-shell-scripts.sh
 
-This GitHub Actions configuration demonstrates how to use `cariad/ci:1.0.0` to:
+`validate-shell-scripts.sh` attempts to validate every shell script in the working directory and subdirectories.
+
+Set the optional `--expect` argument to have the script fail if any more or fewer are found than you expect.
+
+For example, to just validate all the scripts:
+
+```bash
+validate-shell-scripts
+```
+
+To fail if greater or fewer than three scripts are found:
+
+```bash
+validate-shell-scripts --expect 3
+```
+
+## Usage in GitHub Actions
+
+The following configuration demonstrates how to use `cariad/ci:1.0.0` to:
 
 1. Use `pipenv` to create a Python virtual environment and run a script.
 1. Use `hadolint` to lint a Dockerfile.
-1. Use `shellcheck` to lint a shell script.
+1. Use `validate-shell-scripts` to lint all the shell scripts.
 
 ```yaml
 jobs:
   validate:
-    runs-on: ubuntu-latest
     container: cariad/ci:1.0.0
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -41,22 +59,14 @@ jobs:
         run: hadolint Dockerfile
 
       - name: Lint scripts
-        run: shellcheck entry.sh
-```
-
-## Building and running locally
-
-```bash
-./validate.sh
-docker build --tag cariad/ci .
-docker run -it --rm cariad/ci
+        run: validate-shell-scripts
 ```
 
 ## FAQs
 
 ### How do I fix "<botocore.awsrequest.AWSRequest object at 0x7fbfdd919f60>" when I run "aws"?
 
-It looks like `aws` gets upset when a default region isn't set and it can't hit the EC2 metadata service to figure out where it is.
+`aws` gets upset when a default region isn't set and it can't hit the EC2 metadata service to figure out where it is.
 
 Set these two environment variables in your CI pipeline:
 
