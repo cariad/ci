@@ -24,13 +24,13 @@ Set the optional `--expect` argument to have the script fail if any more or fewe
 For example, to just validate all the scripts:
 
 ```bash
-validate-shell-scripts
+validate-shell-scripts.sh
 ```
 
 To fail if greater or fewer than three scripts are found:
 
 ```bash
-validate-shell-scripts --expect 3
+validate-shell-scripts.sh --expect 3
 ```
 
 ## Usage in GitHub Actions
@@ -59,7 +59,7 @@ jobs:
         run: hadolint Dockerfile
 
       - name: Lint scripts
-        run: validate-shell-scripts
+        run: validate-shell-scripts.sh
 ```
 
 ## FAQs
