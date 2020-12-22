@@ -13,33 +13,15 @@ A Docker image for all my CI/CD needs, and maybe yours too.
 - `python` (3.9.0)
 - `shellcheck`
 
-## Scripts
+## Example usage
 
-### validate-shell-scripts.sh
+### GitHub Actions
 
-`validate-shell-scripts.sh` attempts to validate every shell script in the working directory and subdirectories.
-
-Set the optional `--expect` argument to have the script fail if any more or fewer are found than you expect.
-
-For example, to just validate all the scripts:
-
-```bash
-validate-shell-scripts.sh
-```
-
-To fail if greater or fewer than three scripts are found:
-
-```bash
-validate-shell-scripts.sh --expect 3
-```
-
-## Usage in GitHub Actions
-
-The following configuration demonstrates how to use `cariad/ci:1.0.0` to:
+This GitHub Actions configuration demonstrates how to use `cariad/ci:1.0.0` to:
 
 1. Use `pipenv` to create a Python virtual environment and run a script.
 1. Use `hadolint` to lint a Dockerfile.
-1. Use `validate-shell-scripts` to lint all the shell scripts.
+1. Use `shellcheck` to lint a shell script.
 
 ```yaml
 jobs:
@@ -59,7 +41,15 @@ jobs:
         run: hadolint Dockerfile
 
       - name: Lint scripts
-        run: validate-shell-scripts.sh
+        run: shellcheck entry.sh
+```
+
+## Building and running locally
+
+```bash
+./validate.sh
+docker build --tag cariad/ci .
+docker run -it --rm cariad/ci
 ```
 
 ## FAQs

@@ -45,11 +45,10 @@ RUN pyenv install "${PYENV_VERSION}" && \
     rm -rf /tmp/*                    && \
     python --version
 
-# Python packages:
+# pipenv:
 ENV PIPENV_YES 1
 RUN pip install --no-cache-dir --upgrade pip==20.2.4        && \
-    pip install --no-cache-dir           pipenv==2020.11.15    \
-                                         yamllint~=1.25
+    pip install --no-cache-dir           pipenv==2020.11.15
 
 # hadolint:
 ADD https://github.com/hadolint/hadolint/releases/download/v1.19.0/hadolint-Linux-x86_64 /usr/local/bin/hadolint
@@ -76,6 +75,3 @@ RUN gpg --verify /tmp/aws.zip.sig /tmp/aws.zip && \
     /tmp/aws/install                           && \
     rm -rf /tmp/*                              && \
     aws --version
-
-# bin directory:
-COPY bin/ /usr/local/bin
