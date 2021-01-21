@@ -7,11 +7,12 @@ A Docker image for all my CI/CD needs, and maybe yours too.
 `cariad/ci` is based on `ubuntu:20.04` and includes:
 
 - `aws`
-- `hadolint`
+- [hadolint](https://github.com/hadolint/hadolint)
+- [htmlproofer](https://github.com/gjtorikian/html-proofer)
 - `pipenv`
 - `pyenv`
 - `python` (3.9.0)
-- `shellcheck`
+- [shellcheck](https://github.com/koalaman/shellcheck)
 
 ## Example usage
 

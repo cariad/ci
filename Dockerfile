@@ -1,35 +1,45 @@
 FROM ubuntu:20.04
 
-ENV LANG C.UTF-8
+ENV LANG   C.UTF-8
+ENV LC_ALL C.UTF-8
 
-RUN apt-get update                                && \
-    apt-get --no-install-recommends --yes install    \
+RUN apt-get update                                  && \
+    apt-get --no-install-recommends --yes install      \
       # Build tools:
-      ca-certificates=*                              \
-      curl=7.68.*                                    \
-      git=1:2.25.*                                   \
-      gpg=2.2.*                                      \
-      gpg-agent=2.2.*                                \
-      groff=1.22.*                                   \
-      jq=1.6-*                                       \
-      unzip=6.0-*                                    \
+      ca-certificates=*                                \
+      curl=7.68.*                                      \
+      git=1:2.25.*                                     \
+      gpg=2.2.*                                        \
+      gpg-agent=2.2.*                                  \
+      groff=1.22.*                                     \
+      jq=1.6-*                                         \
+      unzip=6.0-*                                      \
       # Python build dependencies:
-      build-essential=12.8ubuntu1*                   \
-      libbz2-dev=1.0.*                               \
-      libdb5.3-dev=5.3.*                             \
-      libexpat1-dev=2.2.*                            \
-      libffi-dev=3.3-*                               \
-      libgdbm-dev=1.18.*                             \
-      liblzma-dev=5.2.*                              \
-      libncurses5-dev=6.2-*                          \
-      libncursesw5-dev=6.2-*                         \
-      libreadline-dev=8.0-*                          \
-      libssl-dev=1.1.*                               \
-      libsqlite3-dev=3.31.*                          \
-      uuid-dev=2.34-*                                \
-      zlib1g-dev=1:1.2.*                          && \
-    rm -rf /var/lib/apt/lists/*                   && \
-    git config --system advice.detachedHead false
+      build-essential=12.8ubuntu1*                     \
+      libbz2-dev=1.0.*                                 \
+      libdb5.3-dev=5.3.*                               \
+      libexpat1-dev=2.2.*                              \
+      libffi-dev=3.3-*                                 \
+      libgdbm-dev=1.18.*                               \
+      liblzma-dev=5.2.*                                \
+      libncurses5-dev=6.2-*                            \
+      libncursesw5-dev=6.2-*                           \
+      libreadline-dev=8.0-*                            \
+      libssl-dev=1.1.*                                 \
+      libsqlite3-dev=3.31.*                            \
+      uuid-dev=2.34-*                                  \
+      zlib1g-dev=1:1.2.*                               \
+      # Ruby:
+      libcurl4-openssl-dev=7.68.*                      \
+      ruby-full=1:2.7+*                                \
+      zlib1g-dev=1:1.2.*                            && \
+    rm -rf /var/lib/apt/lists/*                     && \
+    git config --system advice.detachedHead false   && \
+    gem update --development --system --no-document
+
+ENV HTMLPROOFER_VERSION 3.18.2
+RUN gem install html-proofer:"${HTMLPROOFER_VERSION:?}" --no-document && \
+    htmlproofer --version
 
 # pyenv:
 ENV PYENV_ROOT /root/.pyenv
