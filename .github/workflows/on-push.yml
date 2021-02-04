@@ -1,4 +1,4 @@
-name: on-commit
+name: on-push
 
 on:  # yamllint disable-line rule:truthy
   push:
