@@ -13,6 +13,7 @@ A Docker image for all my CI/CD needs, and maybe yours too.
 - `pyenv`
 - `python` (3.9.0)
 - [shellcheck](https://github.com/koalaman/shellcheck)
+- `zip`
 
 ## Example usage
 
