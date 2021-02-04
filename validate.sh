@@ -7,7 +7,7 @@ ok="\033[0;32m✔️\033[0m "  # OK
 ################################################################################
 # TEST SHELL SCRIPTS
 
-expect=3
+expect=1
 found=0
 
 while IFS="" read -r file_path
