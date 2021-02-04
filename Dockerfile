@@ -13,6 +13,7 @@ RUN apt-get update                                  && \
       gpg-agent=2.2.*                                  \
       groff=1.22.*                                     \
       jq=1.6-*                                         \
+      zip=3.*                                          \
       unzip=6.0-*                                      \
       # Python build dependencies:
       build-essential=12.8ubuntu1*                     \

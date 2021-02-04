@@ -1,4 +1,6 @@
 .*
 LICENSE
+Pipfile
+Pipfile.lock
 README.md
 validate.sh

@@ -1,12 +1,37 @@
 #!/bin/bash -e
 
-echo "Linting scripts..."
-find . -name '*.sh' -exec shellcheck -o all --severity style -x {} +
+li="\033[1;34m↪\033[0m "  # List item
+nk="\033[0;31m⨯\033[0m "  # Not OK
+ok="\033[0;32m✔️\033[0m "  # OK
 
-echo "Linting Dockerfile..."
+################################################################################
+# TEST SHELL SCRIPTS
+
+expect=1
+found=0
+
+while IFS="" read -r file_path
+do
+  echo -e "${li:?}${file_path:?}"
+  shellcheck --check-sourced --enable=all --severity style -x "${file_path:?}"
+  found=$((found + 1))
+done < <(find . -name "*.sh")
+
+if [[ "${expect:?}" != "${found:?}" ]]; then
+  echo -e "${nk:?}Expected ${expect:?} scripts but found ${found:?}"
+  exit 1
+fi
+
+echo -e "${ok:?}${found:?} scripts validated"
+
+################################################################################
+# TEST YAML
+
+yamllint . --strict
+echo -e "${ok:?}YAML OK"
+
+################################################################################
+# TEST DOCKERFILE
+
 hadolint Dockerfile
-
-echo "Linting YAML..."
-yamllint .
-
-echo "OK!"
+echo -e "${ok:?}Dockerfile OK"
