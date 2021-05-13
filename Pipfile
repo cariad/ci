@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 
 [dev-packages]
+pyyaml = ">=5.4"
 yamllint = "*"
 
 [requires]
